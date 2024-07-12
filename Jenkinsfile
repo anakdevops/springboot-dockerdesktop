@@ -5,14 +5,7 @@ pipeline {
     }
 
     stages {
-        stage('Clone & compile') {
-            steps {
-                git branch: 'main',
-                    url: 'https://github.com/anakdevops/springboot-dockerdesktop.git'
-                bat "ls -lat"
-                bat "mvn clean package"    
-            }
-        }
+        
         
         stage('Build Docker') {
             agent { label 'windows' }
