@@ -33,5 +33,10 @@ pipeline {
                     bat "kubectl apply -f services.yaml"
                 }
             }
+        stage('Curl') {
+            steps {
+                    bat "curl localhost:30007"
+                }
+            }
     }
 }
