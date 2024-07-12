@@ -8,7 +8,7 @@ pipeline {
         stage('Clone & compile') {
             steps {
                 git branch: 'main',
-                    url: 'https://github.com/anakdevops/hello-world-springboot.git'
+                    url: 'https://github.com/anakdevops/springboot-dockerdesktop.git'
                 sh "ls -lat"
                 sh "mvn clean package"    
             }
