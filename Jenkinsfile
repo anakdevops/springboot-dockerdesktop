@@ -22,8 +22,8 @@ pipeline {
         }
         stage('Build Docker') {
             steps {
-                bat "docker image rm nakdevops:v1"
-                bat "docker image rm anakdevops/spring-dockerdesktop:v1"
+                bat "docker image rm anakdevops:v1 || true"
+                bat "docker image rm anakdevops/spring-dockerdesktop:v1 || true"
                 bat "docker build -t anakdevops:v1 ."
                 bat "docker tag anakdevops:v1 anakdevops/spring-dockerdesktop:v1"
                 bat "docker push anakdevops/spring-dockerdesktop:v1"
