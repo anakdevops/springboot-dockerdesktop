@@ -5,8 +5,6 @@ pipeline {
     }
 
     stages {
-        
-        
         stage('Build Docker') {
             agent { label 'windows' }
             steps {
