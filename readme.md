@@ -1,6 +1,9 @@
 
 # springboot-dockerdesktop
 
+# Deploy Spring Boot project "hello world" on top of kubernetes docker desktop
+# Use maven to make integration with CI/CD (Jenkins)
+
 
 Run Jenkins as container
 
