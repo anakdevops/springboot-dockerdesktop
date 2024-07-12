@@ -17,7 +17,7 @@ pipeline {
         stage('Build Docker') {
             agent {label 'windows' }
             steps {
-                bat 'docker build -t anakdevops:$DOCKER_TAG .'
+                sh 'docker build -t anakdevops:$DOCKER_TAG .'
             }
         }
         stage('Build tag and push') {
