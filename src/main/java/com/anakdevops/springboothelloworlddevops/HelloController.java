@@ -8,7 +8,7 @@ public class HelloController {
 
 	@GetMapping("/")
 	public String index() {
-		return "Hello world (image tag v4)";
+		return "Hello world (image tag v1)";
 	}
 
 }
