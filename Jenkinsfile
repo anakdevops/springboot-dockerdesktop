@@ -1,5 +1,5 @@
 pipeline {
-    agent {label 'linux' }
+    agent {label 'windows' }
     tools {
         maven "maven-3.9.6"
     }
@@ -15,17 +15,19 @@ pipeline {
         }
         
         stage('Build Docker') {
+            agent { label 'windows' }
             steps {
-                sh 'docker build -t anakdevops:$DOCKER_TAG .'
+                bat 'docker build -t anakdevops:$DOCKER_TAG .'
             }
         }
         stage('Build tag and push') {
+            agent { label 'windows' }
             steps {
-                sh 'docker tag anakdevops:$DOCKER_TAG anakdevops/java-pipeline:$DOCKER_TAG'
-                sh 'docker push anakdevops/java-pipeline:$DOCKER_TAG'
-                sh 'docker stop anakdevops || true' 
-                sh 'docker rm anakdevops || true'   
-                sh 'docker run -d --name anakdevops -p 8333:8080 anakdevops/java-pipeline:$DOCKER_TAG'
+                bat 'docker tag anakdevops:$DOCKER_TAG anakdevops/springboot-desktop:$DOCKER_TAG'
+                bat 'docker push anakdevops/springboot-desktop:$DOCKER_TAG'
+                bat 'docker stop anakdevops || true' 
+                bat 'docker rm anakdevops || true'   
+                bat 'docker run -d --name anakdevops -p 8333:8080 anakdevops/springboot-desktop:$DOCKER_TAG'
             }
         }
         stage('Cleanup') {
@@ -34,14 +36,12 @@ pipeline {
              }
             }
         stage('Deploy') {
-            
-
             agent { label 'windows' }
             steps {
                script {
-                  sh 'docker stop anakdevops || true' 
-                  sh 'docker rm anakdevops || true'   
-                  sh 'docker run -d --name anakdevops -p 8444:8080 anakdevops/java-pipeline:$DOCKER_TAG'
+                  bat 'docker stop anakdevops || true' 
+                  bat 'docker rm anakdevops || true'   
+                  bat 'docker run -d --name anakdevops -p 8444:8080 anakdevops/springboot-desktop:$DOCKER_TAG'
              }
            }
         }
