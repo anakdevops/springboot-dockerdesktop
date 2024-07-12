@@ -1,3 +1,14 @@
+
+# springboot-dockerdesktop
+
+
+Run Jenkins as container
+
+```
+docker run -p 8080:8080 -p 50000:50000 jenkins/jenkins
+```
+
+
 java 17
 
 ```
@@ -11,6 +22,4 @@ docker build -t anakdevops .
 docker run -d --name spring -p 82:8080 anakdevops
 curl localhost:82
 ```
-"# springboot-dockerdesktop" 
-# springboot-dockerdesktop
-# springboot-dockerdesktop
+
