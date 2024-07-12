@@ -1,5 +1,5 @@
 pipeline {
-    agent {label 'agent_dev' }
+    agent {label 'linux' }
     tools {
         maven "maven-3.9.6"
     }
@@ -34,12 +34,9 @@ pipeline {
              }
             }
         stage('Deploy') {
-            input {
-                message "Deploy ke uat?"
-                ok "Ya"
-            }
+            
 
-            agent { label 'agent_uat' }
+            agent { label 'windows' }
             steps {
                script {
                   sh 'docker stop anakdevops || true' 
