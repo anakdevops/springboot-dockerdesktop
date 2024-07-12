@@ -1,24 +1,31 @@
 pipeline {
-    agent {label 'windows' }
+    agent {label 'linux' }
     tools {
         maven "maven-3.9.6"
     }
 
     stages {
-        stage('Build Docker') {
-            agent { label 'windows' }
+        stage('Clone & compile') {
             steps {
-                bat 'docker build -t anakdevops:$DOCKER_TAG .'
+                git branch: 'main',
+                    url: 'https://github.com/anakdevops/hello-world-springboot.git'
+                sh "ls -lat"
+                sh "mvn clean package"    
+            }
+        }
+        
+        stage('Build Docker') {
+            steps {
+                sh 'docker build -t anakdevops:$DOCKER_TAG .'
             }
         }
         stage('Build tag and push') {
-            agent { label 'windows' }
             steps {
-                bat 'docker tag anakdevops:$DOCKER_TAG anakdevops/springboot-desktop:$DOCKER_TAG'
-                bat 'docker push anakdevops/springboot-desktop:$DOCKER_TAG'
-                bat 'docker stop anakdevops || true' 
-                bat 'docker rm anakdevops || true'   
-                bat 'docker run -d --name anakdevops -p 8333:8080 anakdevops/springboot-desktop:$DOCKER_TAG'
+                sh 'docker tag anakdevops:$DOCKER_TAG anakdevops/java-pipeline:$DOCKER_TAG'
+                sh 'docker push anakdevops/java-pipeline:$DOCKER_TAG'
+                sh 'docker stop anakdevops || true' 
+                sh 'docker rm anakdevops || true'   
+                sh 'docker run -d --name anakdevops -p 8333:8080 anakdevops/java-pipeline:$DOCKER_TAG'
             }
         }
         stage('Cleanup') {
@@ -27,12 +34,14 @@ pipeline {
              }
             }
         stage('Deploy') {
+           
+
             agent { label 'windows' }
             steps {
                script {
-                  bat 'docker stop anakdevops || true' 
-                  bat 'docker rm anakdevops || true'   
-                  bat 'docker run -d --name anakdevops -p 8444:8080 anakdevops/springboot-desktop:$DOCKER_TAG'
+                  sh 'docker stop anakdevops || true' 
+                  sh 'docker rm anakdevops || true'   
+                  sh 'docker run -d --name anakdevops -p 8444:8080 anakdevops/java-pipeline:$DOCKER_TAG'
              }
            }
         }
