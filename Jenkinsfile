@@ -23,8 +23,15 @@ pipeline {
         stage('Build Docker') {
             steps {
                 bat "docker build -t anakdevops:v1 ."
-                bat "docker tag anakdevops:v1 anakdevops/java-pipeline:v1"
+                bat "docker tag anakdevops:v1 anakdevops/spring-dockerdesktop:v1"
+                bat "docker push anakdevops/spring-dockerdesktop:v1"
             }
         }
+        stage('Deploy to Kubernetes') {
+            steps {{
+                    bat "kubectl apply -f deploy.yaml"
+                    bat "kubectl apply -f services.yaml"
+                }
+            }
     }
 }
