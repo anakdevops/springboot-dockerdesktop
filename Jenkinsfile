@@ -15,7 +15,6 @@ pipeline {
         }
         
         stage('Build Docker') {
-            agent {label 'windows' }
             steps {
                 sh 'docker build -t anakdevops:$DOCKER_TAG .'
             }
@@ -35,8 +34,6 @@ pipeline {
              }
             }
         stage('Deploy') {
-           
-
             agent { label 'windows' }
             steps {
                script {
