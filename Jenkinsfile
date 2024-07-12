@@ -9,8 +9,8 @@ pipeline {
             steps {
                 git branch: 'main',
                     url: 'https://github.com/anakdevops/springboot-dockerdesktop.git'
-                sh "ls -lat"
-                sh "mvn clean package"    
+                bat "ls -lat"
+                bat "mvn clean package"    
             }
         }
         
